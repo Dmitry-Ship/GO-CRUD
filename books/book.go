@@ -31,22 +31,22 @@ func CreateBook(book Book) Book {
 	return book
 }
 
-func getBookById(bookId string) (*Book, int) {
+func GetBookById(bookId string) (Book, int, error) {
 	for i, book := range Books {
 		if book.ID == bookId {
-			return &book, i
+			return book, i, nil
 		}
 	}
-	return nil, 0
+	return Book{}, 0, errors.New("book not found")
 }
 
-func DeleteBook(bookId string) (*Book, error) {
-	book, i := getBookById(bookId)
+func DeleteBook(bookId string) (Book, error) {
+	book, i, err := GetBookById(bookId)
 
-	if book != nil {
-		Books = append(Books[:i], Books[i+1:]...)
-		return book, nil
+	if err != nil {
+		return Book{}, errors.New("Book not found")
 	}
 
-	return nil, errors.New("Book not found")
+	Books = append(Books[:i], Books[i+1:]...)
+	return book, nil
 }
