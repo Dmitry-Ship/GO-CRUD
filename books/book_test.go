@@ -9,20 +9,17 @@ import (
 
 func TestCreateBook(t *testing.T) {
 
-	author := Author{
-		FirstName: "John",
-		LastName:  "Doe",
-	}
-
 	book := Book{
 		Title:  "hello",
-		Author: &author,
+		Author: "John Doe",
+		ISBN:   "123",
 	}
 
 	expectedBook := Book{
 		Title:  "hello",
+		Author: "John Doe",
+		ISBN:   "123",
 		ID:     "498081",
-		Author: &author,
 	}
 
 	result := CreateBook(book)
@@ -31,15 +28,10 @@ func TestCreateBook(t *testing.T) {
 }
 
 func TestGetBookById(t *testing.T) {
-
-	author := Author{
-		FirstName: "John",
-		LastName:  "Doe",
-	}
-
 	book := Book{
 		Title:  "hello",
-		Author: &author,
+		Author: "John Doe",
+		ISBN:   "123",
 	}
 
 	createdBook := CreateBook(book)
@@ -56,14 +48,10 @@ func TestGetBookByIdNotFound(t *testing.T) {
 }
 
 func TestDeleteBook(t *testing.T) {
-	author := Author{
-		FirstName: "John",
-		LastName:  "Doe",
-	}
-
 	book := Book{
 		Title:  "hello",
-		Author: &author,
+		Author: "John Doe",
+		ISBN:   "123",
 	}
 
 	createdBook := CreateBook(book)

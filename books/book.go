@@ -7,18 +7,15 @@ import (
 )
 
 type Book struct {
-	ID     string  `json:"id"`
-	Title  string  `json:"title"`
-	Author *Author `json:"author"`
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Author      string `json:"author"`
+	ISBN        string `json:"isbn"`
+	PublishedAt string `json:"published_at"`
 }
 
 type BookByIDRequest struct {
 	ID string `json:"id"`
-}
-
-type Author struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
 }
 
 var Books []Book
