@@ -52,7 +52,7 @@ func TestGetBookById(t *testing.T) {
 func TestGetBookByIdNotFound(t *testing.T) {
 	_, _, err := GetBookById("123")
 
-	assert.Equal(t, err, errors.New("Book not found"), "Shuuld return error if book not found.")
+	assert.Equal(t, err, errors.New("book not found"), "Shuuld return error if book not found.")
 }
 
 func TestDeleteBook(t *testing.T) {
