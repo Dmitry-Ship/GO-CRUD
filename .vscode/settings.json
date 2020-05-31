@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "database": "dmitryshipunov",
+            "dialect": "PostgreSQL",
+            "name": "dmitryshipunov",
+            "port": 5432,
+            "server": "localhost",
+            "username": "dmitryshipunov"
+        }
+    ]
+}

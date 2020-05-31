@@ -3,18 +3,17 @@ package main
 import (
 	"GO-CRUD/books"
 	"GO-CRUD/proxy"
-	"fmt"
-	"log"
 	"net/http"
+
+	"github.com/jinzhu/gorm"
 )
 
-func HandleRequests() {
+func HandleRequests(db *gorm.DB) {
 	http.HandleFunc("/proxy", proxy.Proxy)
 
-	http.HandleFunc("/books", books.GetBooks)
-	http.HandleFunc("/books/create", books.AddBook)
-	http.HandleFunc("/books/delete", books.RemoveBook)
+	booksStore := books.NewBooksStore(db)
 
-	fmt.Println("Listening to: http://localhost:3000")
-	log.Fatal(http.ListenAndServe(":3000", nil))
+	http.HandleFunc("/books", books.GetBooks(booksStore))
+	http.HandleFunc("/books/create", books.AddBook(booksStore))
+	http.HandleFunc("/books/delete", books.RemoveBook(booksStore))
 }
