@@ -11,14 +11,14 @@ type BookByIDRequest struct {
 	ID string `json:"id"`
 }
 
-func GetBooks(bookStore BookStorage) func(w http.ResponseWriter, r *http.Request) {
+func GetBooks(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		result, _ := bookStore.GetAllBooks(5)
+		result, _ := bookService.GetAllBooks(5)
 		common.SendJSONresponse(result, w)
 	}
 }
 
-func AddBook(bookStore BookStorage) func(w http.ResponseWriter, r *http.Request) {
+func AddBook(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		book := Book{}
 		err := json.NewDecoder(r.Body).Decode(&book)
@@ -27,12 +27,12 @@ func AddBook(bookStore BookStorage) func(w http.ResponseWriter, r *http.Request)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		newBook, _ := bookStore.CreateBook(book)
+		newBook, _ := bookService.CreateBook(book)
 		common.SendJSONresponse(newBook, w)
 	}
 }
 
-func RemoveBook(bookStore BookStorage) func(w http.ResponseWriter, r *http.Request) {
+func RemoveBook(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		bookById := BookByIDRequest{}
 		err := json.NewDecoder(r.Body).Decode(&bookById)
@@ -43,7 +43,7 @@ func RemoveBook(bookStore BookStorage) func(w http.ResponseWriter, r *http.Reque
 			return
 		}
 
-		deletedBook, _ := bookStore.DeleteBook(bookById.ID)
+		deletedBook, _ := bookService.DeleteBook(bookById.ID)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
