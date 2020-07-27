@@ -40,7 +40,7 @@ func TestGetBookById(t *testing.T) {
 
 	result, err := Repository.GetBookById(book.ID)
 
-	assert.Equal(t, nil, err, "Error occured")
+	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, book, result, "The two books should be the same.")
 }
 
@@ -52,7 +52,7 @@ func TestGetAllBooks(t *testing.T) {
 
 	result, err := Repository.GetAllBooks(0)
 
-	assert.Equal(t, nil, err, "Error occured")
+	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, 0, len(result), "The two words should be the same.")
 }
 
@@ -78,7 +78,7 @@ func TestCreateBook(t *testing.T) {
 
 	result, err := Repository.CreateBook(book)
 
-	assert.Equal(t, nil, err, "Error occured")
+	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, book, result, "The two words should be the same.")
 }
 
@@ -104,6 +104,6 @@ func TestCreateBook(t *testing.T) {
 
 // 	result, err := Repository.DeleteBook(book.ID)
 
-// 	assert.Equal(t, nil, err, "Error occured")
+// 	assert.Equal(t, nil, err, "Error occurred")
 // 	assert.Equal(t, book, result, "The two words should be the same.")
 // }

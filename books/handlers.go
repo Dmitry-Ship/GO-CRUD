@@ -13,7 +13,13 @@ type BookByIDRequest struct {
 
 func GetBooks(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		result, _ := bookService.GetAllBooks(5)
+		result, err := bookService.GetAllBooks(5)
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+
 		common.SendJSONresponse(result, w)
 	}
 }
@@ -43,10 +49,10 @@ func RemoveBook(bookService Service) func(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		deletedBook, _ := bookService.DeleteBook(bookById.ID)
+		deletedBook, deletionError := bookService.DeleteBook(bookById.ID)
 
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+		if deletionError != nil {
+			http.Error(w, deletionError.Error(), http.StatusBadRequest)
 			return
 		}
 

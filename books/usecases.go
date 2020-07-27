@@ -18,21 +18,21 @@ func (s *service) GetAllBooks(limit int) ([]Book, error) {
 }
 
 func (s *service) CreateBook(book Book) (Book, error) {
-	books, err := s.repo.CreateBook(book)
+	book, err := s.repo.CreateBook(book)
 
-	return books, err
+	return book, err
 }
 
 func (s *service) GetBookById(bookId string) (Book, error) {
-	books, err := s.repo.GetBookById(bookId)
+	book, err := s.repo.GetBookById(bookId)
 
-	return books, err
+	return book, err
 }
 
 func (s *service) DeleteBook(bookId string) (Book, error) {
-	books, err := s.repo.DeleteBook(bookId)
+	book, err := s.repo.DeleteBook(bookId)
 
-	return books, err
+	return book, err
 }
 
 func NewService(repo BookRepository) Service {
