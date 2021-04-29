@@ -1,4 +1,4 @@
-package database
+package infrastructure
 
 import (
 	"fmt"
@@ -11,14 +11,15 @@ func GetDatabaseConnection() *gorm.DB {
 	port := os.Getenv("DB_PORT")
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USERNAME")
-	database := os.Getenv("DB_NAME")
+	dbname := os.Getenv("DB_NAME")
+	driver := os.Getenv("DB_DRIVER")
 
-	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable", host, port, user, database)
-	db, err := gorm.Open("postgres", options)
+	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable", host, port, user, dbname)
+	db, err := gorm.Open(driver, options)
 	if err != nil {
 		panic("Could not connect to database")
 	}
-	fmt.Println(fmt.Sprintf("Connected to database %s", database))
+	fmt.Println(fmt.Sprintf("Connected to database %s", dbname))
 
 	// Migrate the schema
 	// db.AutoMigrate(&books.Book{})

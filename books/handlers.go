@@ -11,6 +11,12 @@ type BookByIDRequest struct {
 	ID string `json:"id"`
 }
 
+func HandleRequests(booksService Service) {
+	http.HandleFunc("/api/books", GetBooks(booksService))
+	http.HandleFunc("/api/books/create", AddBook(booksService))
+	http.HandleFunc("/api/books/delete", RemoveBook(booksService))
+}
+
 func GetBooks(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		result, err := bookService.GetAllBooks(50)

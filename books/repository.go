@@ -43,6 +43,6 @@ func (bs *BookStorage) DeleteBook(bookId string) (Book, error) {
 	return book, err
 }
 
-func NewBooksStore(db *gorm.DB) BookRepository {
+func NewBooksRepository(db *gorm.DB) BookRepository {
 	return &BookStorage{db}
 }

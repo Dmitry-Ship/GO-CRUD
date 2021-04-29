@@ -1,7 +1,8 @@
 package main
 
 import (
-	"GO-CRUD/database"
+	"GO-CRUD/books"
+	"GO-CRUD/infrastructure"
 	"fmt"
 	"log"
 	"net/http"
@@ -16,10 +17,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	db := database.GetDatabaseConnection()
+	db := infrastructure.GetDatabaseConnection()
 	defer db.Close()
 
-	HandleRequests(db)
+	booksRepository := books.NewBooksRepository(db)
+	booksService := books.NewService(booksRepository)
+	books.HandleRequests(booksService)
 
 	port := os.Getenv("PORT")
 	host := os.Getenv("HOST")
