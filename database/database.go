@@ -2,31 +2,23 @@ package database
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jinzhu/gorm"
 )
 
-type dbSettings struct {
-	User     string `json:"user"`
-	Database string `json:"dbname"`
-	Port     int    `json:"port"`
-	Host     string `json:"host"`
-}
-
-var DbConfig = dbSettings{
-	User:     "dmitryshipunov",
-	Database: "dmitryshipunov",
-	Port:     5432,
-	Host:     "localhost",
-}
-
 func GetDatabaseConnection() *gorm.DB {
-	options := fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=disable", DbConfig.Host, DbConfig.Port, DbConfig.User, DbConfig.Database)
+	port := os.Getenv("DB_PORT")
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USERNAME")
+	database := os.Getenv("DB_NAME")
+
+	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable", host, port, user, database)
 	db, err := gorm.Open("postgres", options)
 	if err != nil {
 		panic("Could not connect to database")
 	}
-	fmt.Println(fmt.Sprintf("Connected to database %s", DbConfig.Database))
+	fmt.Println(fmt.Sprintf("Connected to database %s", database))
 
 	// Migrate the schema
 	// db.AutoMigrate(&books.Book{})

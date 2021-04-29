@@ -13,7 +13,7 @@ type BookByIDRequest struct {
 
 func GetBooks(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		result, err := bookService.GetAllBooks(5)
+		result, err := bookService.GetAllBooks(50)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
