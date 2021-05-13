@@ -1,6 +1,7 @@
 package infrastructure
 
 import (
+	"GO-CRUD/books"
 	"fmt"
 	"os"
 
@@ -22,8 +23,7 @@ func GetDatabaseConnection() *gorm.DB {
 	fmt.Println(fmt.Sprintf("Connected to database %s", dbname))
 
 	// Migrate the schema
-	// db.AutoMigrate(&books.Book{})
-	// db.AutoMigrate(&proxy.Changelog{})
+	db.AutoMigrate(&books.Book{})
 
 	return db
 }

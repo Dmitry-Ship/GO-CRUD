@@ -32,7 +32,7 @@ func (bs *BookStorage) CreateBook(book Book) (Book, error) {
 
 func (bs *BookStorage) GetBookById(bookId int) (Book, error) {
 	book := Book{}
-	err := bs.db.Where(`id = ?`, bookId).First(&book).Error
+	err := bs.db.Find(&book, bookId).Error
 
 	return book, err
 }
