@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 )
 
@@ -18,7 +17,7 @@ func main() {
 	}
 
 	db := infrastructure.GetDatabaseConnection()
-	defer db.Close()
+	// defer db.Close()
 
 	booksRepository := books.NewBooksRepository(db)
 	booksService := books.NewService(booksRepository)

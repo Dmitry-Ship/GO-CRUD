@@ -5,8 +5,9 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var Repository *BookStorage
@@ -16,7 +17,9 @@ func TestMain(m *testing.M) {
 	db, mock, _ := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
 	Mock = mock
 
-	gdb, _ := gorm.Open("postgres", db)
+	gdb, _ := gorm.Open(postgres.New(postgres.Config{
+		Conn: db,
+	}), &gorm.Config{})
 
 	Repository = &BookStorage{db: gdb}
 	os.Exit(m.Run())
@@ -24,7 +27,7 @@ func TestMain(m *testing.M) {
 
 func TestGetBookById(t *testing.T) {
 	book := Book{
-		ID:       "1",
+		ID:       1,
 		Title:    "hello",
 		Author:   "John Doe",
 		ISBN:     "123",
@@ -35,7 +38,7 @@ func TestGetBookById(t *testing.T) {
 		NewRows([]string{"id", "title", "author", "isbn", "language"}).
 		AddRow(book.ID, book.Title, book.Author, book.ISBN, book.Language)
 
-	const sqlSelectOne = `SELECT * FROM "books" WHERE (id = $1) ORDER BY "books"."id" ASC LIMIT 1`
+	const sqlSelectOne = `SELECT * FROM "books" WHERE id = $1 ORDER BY "books"."id" LIMIT 1`
 	Mock.ExpectQuery(sqlSelectOne).WithArgs(book.ID).WillReturnRows(rows)
 
 	result, err := Repository.GetBookById(book.ID)
@@ -59,7 +62,7 @@ func TestGetAllBooks(t *testing.T) {
 func TestCreateBook(t *testing.T) {
 
 	book := Book{
-		ID:          "1",
+		ID:          1,
 		Title:       "hello",
 		Author:      "John Doe",
 		ISBN:        "123",
@@ -67,12 +70,12 @@ func TestCreateBook(t *testing.T) {
 		PublishedAt: "hello",
 	}
 
-	const sqlInsert = `INSERT INTO "books" ("id","title","author","isbn","published_at","language")
-                                        VALUES ($1,$2,$3,$4,$5,$6) RETURNING "books"."id"`
+	const sqlInsert = `INSERT INTO "books" ("title","author","isbn","published_at","language","id")
+                                        VALUES ($1,$2,$3,$4,$5,$6) RETURNING "id"`
 	const newId = 1
 	Mock.ExpectBegin() // begin transaction
 	Mock.ExpectQuery(sqlInsert).
-		WithArgs(book.ID, book.Title, book.Author, book.ISBN, "hello", book.Language).
+		WithArgs(book.Title, book.Author, book.ISBN, book.PublishedAt, book.Language, book.ID).
 		WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(newId))
 	Mock.ExpectCommit() // commit transaction
 
@@ -85,7 +88,7 @@ func TestCreateBook(t *testing.T) {
 // func TestDeleteBookNotFound(t *testing.T) {
 
 // 	book := Book{
-// 		ID:          "1",
+// 		ID:          1,
 // 		Title:       "hello",
 // 		Author:      "John Doe",
 // 		ISBN:        "123",

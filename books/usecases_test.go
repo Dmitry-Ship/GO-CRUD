@@ -16,9 +16,9 @@ func (mr *MockRepo) CreateBook(book Book) (Book, error) {
 	return book, nil
 }
 
-func (mr *MockRepo) GetBookById(bookId string) (Book, error) {
+func (mr *MockRepo) GetBookById(bookId int) (Book, error) {
 	book := Book{
-		ID:       "1",
+		ID:       1,
 		Title:    "hello",
 		Author:   "John Doe",
 		ISBN:     "123",
@@ -28,7 +28,7 @@ func (mr *MockRepo) GetBookById(bookId string) (Book, error) {
 	return book, nil
 }
 
-func (mr *MockRepo) DeleteBook(bookId string) (Book, error) {
+func (mr *MockRepo) DeleteBook(bookId int) (Book, error) {
 	return Book{}, nil
 }
 
@@ -44,7 +44,7 @@ func TestGetAllBooksService(t *testing.T) {
 
 func TestCreateBookService(t *testing.T) {
 	book := Book{
-		ID:          "1",
+		ID:          1,
 		Title:       "hello",
 		Author:      "John Doe",
 		ISBN:        "123",
@@ -60,7 +60,7 @@ func TestCreateBookService(t *testing.T) {
 
 func TestGetBookByIdService(t *testing.T) {
 	book := Book{
-		ID:       "1",
+		ID:       1,
 		Title:    "hello",
 		Author:   "John Doe",
 		ISBN:     "123",

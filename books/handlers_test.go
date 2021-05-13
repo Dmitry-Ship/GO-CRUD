@@ -21,9 +21,9 @@ func (mr *MockService) CreateBook(book Book) (Book, error) {
 	return book, nil
 }
 
-func (mr *MockService) GetBookById(bookId string) (Book, error) {
+func (mr *MockService) GetBookById(bookId int) (Book, error) {
 	book := Book{
-		ID:       "1",
+		ID:       1,
 		Title:    "hello",
 		Author:   "John Doe",
 		ISBN:     "123",
@@ -33,7 +33,7 @@ func (mr *MockService) GetBookById(bookId string) (Book, error) {
 	return book, nil
 }
 
-func (mr *MockService) DeleteBook(bookId string) (Book, error) {
+func (mr *MockService) DeleteBook(bookId int) (Book, error) {
 	return Book{}, nil
 }
 
@@ -57,7 +57,7 @@ func TestGetBooksHandler(t *testing.T) {
 
 func TestAddBookHandler(t *testing.T) {
 	book := Book{
-		ID:          "1",
+		ID:          1,
 		Title:       "hello",
 		Author:      "John Doe",
 		ISBN:        "123",

@@ -3,8 +3,8 @@ package books
 type Service interface {
 	GetAllBooks(limit int) ([]Book, error)
 	CreateBook(book Book) (Book, error)
-	GetBookById(bookId string) (Book, error)
-	DeleteBook(bookId string) (Book, error)
+	GetBookById(bookId int) (Book, error)
+	DeleteBook(bookId int) (Book, error)
 }
 
 type service struct {
@@ -23,13 +23,13 @@ func (s *service) CreateBook(book Book) (Book, error) {
 	return book, err
 }
 
-func (s *service) GetBookById(bookId string) (Book, error) {
+func (s *service) GetBookById(bookId int) (Book, error) {
 	book, err := s.repo.GetBookById(bookId)
 
 	return book, err
 }
 
-func (s *service) DeleteBook(bookId string) (Book, error) {
+func (s *service) DeleteBook(bookId int) (Book, error) {
 	book, err := s.repo.DeleteBook(bookId)
 
 	return book, err

@@ -8,7 +8,7 @@ import (
 )
 
 type BookByIDRequest struct {
-	ID string `json:"id"`
+	ID int `json:"id"`
 }
 
 func HandleRequests(booksService Service) {

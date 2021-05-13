@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func GetDatabaseConnection() *gorm.DB {
@@ -12,10 +13,9 @@ func GetDatabaseConnection() *gorm.DB {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USERNAME")
 	dbname := os.Getenv("DB_NAME")
-	driver := os.Getenv("DB_DRIVER")
 
 	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable", host, port, user, dbname)
-	db, err := gorm.Open(driver, options)
+	db, err := gorm.Open(postgres.Open(options), &gorm.Config{})
 	if err != nil {
 		panic("Could not connect to database")
 	}
