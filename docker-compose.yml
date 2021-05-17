@@ -1,0 +1,33 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: "3"
+
+services:
+  dbpostgres:
+    image: postgres
+    volumes:
+      - ./db/pgdata:/pgdata
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_DB=dmitryshipunov
+      - POSTGRES_USER=dmitryshipunov
+      - PGDATA=/pgdata
+      - POSTGRES_PASSWORD=qwerty
+
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    command: go run .
+    links:
+      - dbpostgres
+    environment:
+      - PORT=3000
+      - DB_HOST=dbpostgres
+      - DB_PORT=5432
+      - DB_USERNAME=dmitryshipunov
+      - DB_NAME=dmitryshipunov
+      - POSTGRES_PASSWORD=qwerty

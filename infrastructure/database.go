@@ -14,8 +14,9 @@ func GetDatabaseConnection() *gorm.DB {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USERNAME")
 	dbname := os.Getenv("DB_NAME")
+	dbpassword := os.Getenv("POSTGRES_PASSWORD")
 
-	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable", host, port, user, dbname)
+	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbname, dbpassword)
 	db, err := gorm.Open(postgres.Open(options), &gorm.Config{})
 	if err != nil {
 		panic("Could not connect to database")
