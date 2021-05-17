@@ -38,7 +38,7 @@ func TestGetBookById(t *testing.T) {
 		NewRows([]string{"id", "title", "author", "isbn", "language"}).
 		AddRow(book.ID, book.Title, book.Author, book.ISBN, book.Language)
 
-	const sqlSelectOne = `SELECT * FROM "books" WHERE id = $1 ORDER BY "books"."id" LIMIT 1`
+	const sqlSelectOne = `SELECT * FROM "books" WHERE "books"."id" = $1`
 	Mock.ExpectQuery(sqlSelectOne).WithArgs(book.ID).WillReturnRows(rows)
 
 	result, err := Repository.GetBookById(book.ID)
