@@ -1,12 +1,13 @@
 {
     "sqltools.connections": [
         {
-            "askForPassword": false,
-            "database": "dmitryshipunov",
-            "dialect": "PostgreSQL",
-            "name": "dmitryshipunov",
-            "port": 5432,
+            "previewLimit": 50,
             "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "docker-db",
+            "database": "dmitryshipunov",
             "username": "dmitryshipunov"
         }
     ]
