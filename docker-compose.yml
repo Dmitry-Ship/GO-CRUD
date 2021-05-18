@@ -16,11 +16,12 @@ services:
       - POSTGRES_PASSWORD=qwerty
 
   api:
-    build: .
+    build:
+      context: ./src
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
+      - ./src:/app
     command: go run .
     links:
       - dbpostgres
