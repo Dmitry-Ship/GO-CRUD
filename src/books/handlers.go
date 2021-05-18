@@ -17,10 +17,6 @@ func HandleRequests(booksService Service) {
 	http.HandleFunc("/api/books/delete", RemoveBook(booksService))
 }
 
-type BooksResponse struct {
-	Data []Book `json:"data"`
-}
-
 func GetBooks(bookService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		result, err := bookService.GetAllBooks(50)
@@ -30,9 +26,7 @@ func GetBooks(bookService Service) func(w http.ResponseWriter, r *http.Request) 
 			return
 		}
 
-		resp := BooksResponse{Data: result}
-
-		common.SendJSONresponse(resp, w)
+		common.SendJSONresponse(result, w)
 	}
 }
 
