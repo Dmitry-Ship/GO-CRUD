@@ -3,8 +3,9 @@
 version: "3"
 
 services:
-  dbpostgres:
-    image: postgres
+  database:
+    container_name: database
+    image: postgres:alpine
     volumes:
       - ./db/pgdata:/pgdata
     ports:
@@ -16,13 +17,13 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
 
   api:
+    container_name: api
     env_file: .env
-    build:
-      context: ./src
+    build: ./src
     ports:
       - "3000:3000"
     volumes:
       - ./src:/app
     command: go run .
     links:
-      - dbpostgres
+      - database
