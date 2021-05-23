@@ -20,18 +20,17 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: Go to src directory
-        working-directory: ./src
-        run: go mod download
-
       - name: Get dependencies
         working-directory: ./src
         run: go mod download
 
-      - name: Build
-        working-directory: ./src
-        run: go build -v .
+      # - name: Build
+      #   working-directory: ./src
+      #   run: go build -v .
 
       - name: Test
         working-directory: ./src
         run: go test ./... -v .
+
+      - name: Build images
+        run:  docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
