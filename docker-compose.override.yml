@@ -11,6 +11,11 @@ services:
       - POSTGRES_PASSWORD=qwerty
 
   api:
+    build:
+      context: ./src
+      target: base
+    command: "gin run main.go"
+
     volumes:
       - ./src:/app
     environment:
@@ -20,4 +25,3 @@ services:
       - DB_NAME=dmitryshipunov
       - DB_USERNAME=dmitryshipunov
       - DB_PASSWORD=qwerty
-    # command: "gin run main.go"

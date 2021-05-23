@@ -1,4 +1,5 @@
-FROM golang:1.16.4-alpine AS builder
+# stage 1: install dependencies
+FROM golang:1.16.4-alpine AS base
 
 WORKDIR /app
 
@@ -8,17 +9,23 @@ RUN go mod download
 
 COPY . .
 
+RUN go get github.com/codegangsta/gin
+
+# stage 2: build binary for production
+FROM base as build
+
+COPY ./ ./app
+
 RUN go build -v -o main .
 
-# ENTRYPOINT CompileDaemon --build="go build -v -o main ." --command=./main
-# ENTRYPOINT CompileDaemon  --command="go run main.go"
-
+# stage 3: generate minimal image for production
 FROM alpine:latest  
-RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-COPY --from=builder /app .
 
-EXPOSE ${PORT}
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+COPY --from=build /app .
 
 CMD ["./main"]  
 
