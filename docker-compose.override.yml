@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  database:
+    volumes:
+      - ./db/pgdata:/pgdata
+    environment:
+      - POSTGRES_DB=dmitryshipunov
+      - POSTGRES_USER=dmitryshipunov
+      - PGDATA=/pgdata
+      - POSTGRES_PASSWORD=qwerty
+
+  api:
+    volumes:
+      - ./src:/app
+    environment:
+      - DB_PORT=5432
+      - PORT=3000
+      - DB_HOST=database
+      - DB_NAME=dmitryshipunov
+      - DB_USERNAME=dmitryshipunov
+      - DB_PASSWORD=qwerty
+    # command: "gin run main.go"
