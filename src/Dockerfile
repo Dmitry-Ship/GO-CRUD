@@ -27,7 +27,7 @@ WORKDIR /root/
 
 COPY --from=build /app .
 
-CMD ["./main"]  
+# CMD ["./main"]  
 
 
 
