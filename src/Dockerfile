@@ -9,8 +9,6 @@ RUN go mod download
 
 COPY . .
 
-RUN go get github.com/codegangsta/gin
-
 # stage 2: build binary for production
 FROM base as build
 
@@ -19,7 +17,7 @@ COPY ./ ./app
 RUN go build -v -o main .
 
 # stage 3: generate minimal image for production
-FROM alpine:latest  
+FROM alpine:latest as prod
 
 RUN apk --no-cache add ca-certificates
 
@@ -27,7 +25,11 @@ WORKDIR /root/
 
 COPY --from=build /app .
 
-# CMD ["./main"]  
+CMD ["./main"]  
 
+# stage 4: install dev dependencies 
+FROM base as dev
 
+RUN go get github.com/codegangsta/gin
 
+CMD ["gin" , "run", "main.go"]  

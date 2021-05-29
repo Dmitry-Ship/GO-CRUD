@@ -9,4 +9,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
 
   api:
+    build:
+      context: ./src
+      target: prod
     env_file: .env

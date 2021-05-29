@@ -13,8 +13,7 @@ services:
   api:
     build:
       context: ./src
-      target: base
-    command: "gin run main.go"
+      target: dev
 
     volumes:
       - ./src:/app
