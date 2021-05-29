@@ -12,16 +12,12 @@ COPY . .
 # stage 2: build binary for production
 FROM base as build
 
-COPY ./ ./app
-
 RUN go build -v -o main .
 
 # stage 3: generate minimal image for production
 FROM alpine:latest as prod
 
 RUN apk --no-cache add ca-certificates
-
-WORKDIR /root/
 
 COPY --from=build /app .
 
