@@ -40,4 +40,4 @@ jobs:
         run: go test ./... -v .
 
       - name: Build images
-        run:  docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
+        run:  docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
