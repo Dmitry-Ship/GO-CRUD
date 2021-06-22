@@ -1,15 +1,7 @@
 version: "3.8"
 
 services:
-  database:
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USERNAME}
-      - PGDATA=/pgdata
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-
   api:
     build:
       context: ./src
       target: prod
-    env_file: .env

@@ -6,6 +6,11 @@ services:
     image: postgres:alpine
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USERNAME
+      - PGDATA=/pgdata
+      - POSTGRES_PASSWORD=$DB_PASSWORD
 
   api:
     container_name: api
@@ -14,3 +19,10 @@ services:
       - "3000:3000"
     depends_on:
       - database
+    environment:
+      - DB_PORT=$DB_PORT
+      - PORT=$PORT
+      - DB_HOST=$DB_HOST
+      - DB_NAME=$DB_NAME
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$DB_PASSWORD
