@@ -13,16 +13,16 @@ services:
       - POSTGRES_PASSWORD=$DB_PASSWORD
 
   api:
+    environment:
+      - DB_PORT
+      - PORT
+      - DB_HOST
+      - DB_NAME
+      - DB_USERNAME
+      - DB_PASSWORD
     container_name: api
     build: ./src
     ports:
       - ${PORT}:${PORT}
     depends_on:
       - database
-    environment:
-      - DB_PORT=$DB_PORT
-      - PORT=$PORT
-      - DB_HOST=$DB_HOST
-      - DB_NAME=$DB_NAME
-      - DB_USERNAME=$DB_USERNAME
-      - DB_PASSWORD=$DB_PASSWORD
