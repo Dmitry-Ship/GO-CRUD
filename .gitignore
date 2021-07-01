@@ -15,6 +15,11 @@
 # vendor/
 
 .env
+.vscode
+.git
+.gitignore
+.github
+
 db
 
-**/gin-bin
+**/*gin-bin
